@@ -1,5 +1,7 @@
 # gulp-cheerio
 
+[![Build Status](https://travis-ci.org/KenPowers/gulp-cheerio.png)](https://travis-ci.org/KenPowers/gulp-cheerio)
+
 This is a plugin for [gulp][gulp] which allows you to manipulate HTML files
 using [cheerio][cheerio].
 
