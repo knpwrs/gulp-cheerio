@@ -15,6 +15,13 @@ describe('gulp-cheerio tests', function () {
     gc.should.be.a('function');
   });
 
+  it('should accept a fn as the the ops', function () {
+    var runSpy = sinon.spy();
+    var stream = gc(runSpy);
+    stream.write(this.bufferFile);
+    runSpy.should.be.calledOnce;
+  });
+
   it('should accept a custom cheerio', function () {
     var fake$ = {
       html: sinon.stub().returns('content')
