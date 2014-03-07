@@ -114,10 +114,14 @@ describe('gulp-cheerio tests', function () {
     // Not using stub so length property is set correctly
     conf: {run: sinon.spy(function ($, done) { done(); })},
     match: sinon.match.func
-  },{
-    name: 'should load via cheerio and pass the cheerio object to the run function (function as config)',
+  }, {
+    name: 'should load via cheerio and pass the cheerio object to the run function (function as config, no callback)',
     conf: sinon.spy(),
     match: sinon.match.falsy
+  }, {
+    name: 'should load via cheerio and pass the cheerio object to the run function (function as config, callback)',
+    conf: sinon.spy(function ($, done) { done(); }),
+    match: sinon.match.func
   }].forEach(function (test) {
     it(test.name, function () {
       // Original html
