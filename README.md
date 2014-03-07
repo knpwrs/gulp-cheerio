@@ -44,6 +44,38 @@ gulp.task('async', function () {
 });
 ```
 
+If `run` is the only option you are passing then you may simply pass a function:
+
+```javascript
+var gulp = require('gulp'),
+    cheerio = require('gulp-cheerio');
+
+gulp.task('sync', function () {
+  return gulp
+    .src(['src/*.html'])
+    .pipe(cheerio(function ($) {
+      // Each file will be run through cheerio and each corresponding `$` will be passed here.
+      // Make all h1 tags uppercase
+      $('h1').each(function () {
+        var h1 = $(this);
+        h1.text(h1.text().toUpperCase());
+      });
+    }))
+    .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('async', function () {
+  return gulp
+    .src(['src/*.html'])
+    .pipe(cheerio(function ($, done) {
+      // The only difference here is the inclusion of a `done` parameter.
+      // Call `done` when everything is finished. `done` accepts an error if applicable.
+      done();
+    }))
+    .pipe(gulp.dest('dist/'));
+});
+```
+
 Currently, `gulp-cheerio` uses `cheerio` `~0.13.0`. If you want to use your
 own version of `cheerio` you can pass it in as an option:
 
