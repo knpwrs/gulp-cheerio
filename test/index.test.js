@@ -114,6 +114,10 @@ describe('gulp-cheerio tests', function () {
     // Not using stub so length property is set correctly
     conf: {run: sinon.spy(function ($, done) { done(); })},
     match: sinon.match.func
+  },{
+    name: 'should load via cheerio and pass the cheerio object to the run function (function as config)',
+    conf: sinon.spy(),
+    match: sinon.match.falsy
   }].forEach(function (test) {
     it(test.name, function () {
       // Original html
@@ -139,8 +143,9 @@ describe('gulp-cheerio tests', function () {
       dataSpy.should.be.calledWith(this.bufferFile, sinon.match.falsy);
       this.bufferFile.contents.toString().should.equal(html);
       $.html.should.be.calledOnce;
-      test.conf.run.should.be.calledOnce;
-      test.conf.run.should.be.calledWith($, test.match);
+      var runner = typeof test.conf === 'function' ? test.conf : test.conf.run;
+      runner.should.be.calledOnce;
+      runner.should.be.calledWith($, test.match);
       // Restore cheerio's load
       cheerio.load.restore();
     });
