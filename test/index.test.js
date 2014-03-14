@@ -104,7 +104,7 @@ describe('gulp-cheerio tests', function () {
     spy.should.be.calledThrice;
   });
 
-  // Create two tests: one with a callback and the other with no callback
+  // Create some similar tests: one with a callback and the other with no callback
   [{
     name: 'should load via cheerio and pass the cheerio object to the run function (no callback)',
     conf: {run: sinon.spy()},
