@@ -76,13 +76,25 @@ gulp.task('async', function () {
 });
 ```
 
+If you want to use [custom parser options][cpo] simply use the `parserOptions`
+option:
+
+```
+cheerio({
+  run: function () {},
+  parserOptions: {
+    // Options here
+  }
+})
+```
+
 Currently, `gulp-cheerio` uses `cheerio` `~0.13.0`. If you want to use your
 own version of `cheerio` you can pass it in as an option:
 
 ```javascript
 cheerio({
   cheerio: require('cheerio') // local version of `cheerio`
-});
+})
 ```
 
 # License
@@ -112,3 +124,4 @@ SOFTWARE.
 
   [gulp]: http://gulpjs.com/ "gulp.js"
   [cheerio]: https://github.com/MatthewMueller/cheerio "cheerio"
+  [cpo]: https://github.com/cheeriojs/cheerio#loading "Cheerio Load Options"
