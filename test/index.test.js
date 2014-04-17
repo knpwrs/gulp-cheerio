@@ -5,9 +5,10 @@ describe('gulp-cheerio tests', function () {
       Stream = require('stream');
 
   beforeEach(function () {
+    this.originalContent = 'foo';
     this.bufferFile = new FakeFile({
-      path: 'foo',
-      contents: new Buffer('foo')
+      path: this.originalContent,
+      contents: new Buffer(this.originalContent)
     });
   });
 
@@ -22,9 +23,24 @@ describe('gulp-cheerio tests', function () {
     runSpy.should.be.calledOnce;
   });
 
+  it('should accept custom parser options', function () {
+    sinon.spy(cheerio, 'load');
+    var fake$ = {
+      html: sinon.stub.returns(this.originalContent)
+    };
+    var ops = {};
+    var stream = gc({
+      run: sinon.spy(),
+      parserOptions: ops
+    });
+    stream.write(this.bufferFile);
+    cheerio.load.should.be.calledWith(this.originalContent, ops);
+    cheerio.load.restore();
+  });
+
   it('should accept a custom cheerio', function () {
     var fake$ = {
-      html: sinon.stub().returns('content')
+      html: sinon.stub().returns(this.originalContent)
     };
     var fakeCheerio = {
       load: sinon.stub().returns(fake$)
@@ -124,8 +140,6 @@ describe('gulp-cheerio tests', function () {
     match: sinon.match.func
   }].forEach(function (test) {
     it(test.name, function () {
-      // Original html
-      var originalHtml = this.bufferFile.contents.toString();
       // Testing variables
       var html = 'HTML Content',
           $ = {
@@ -143,7 +157,7 @@ describe('gulp-cheerio tests', function () {
       stream.write(this.bufferFile);
       // Assertions
       cheerio.load.should.be.calledOnce;
-      cheerio.load.should.be.calledWith(originalHtml);
+      cheerio.load.should.be.calledWith(this.originalContent);
       dataSpy.should.be.calledWith(this.bufferFile, sinon.match.falsy);
       this.bufferFile.contents.toString().should.equal(html);
       $.html.should.be.calledOnce;
