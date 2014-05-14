@@ -88,7 +88,7 @@ cheerio({
 })
 ```
 
-Currently, `gulp-cheerio` uses `cheerio` `~0.13.0`. If you want to use your
+Currently, `gulp-cheerio` uses `cheerio` `~0.14.0`. If you want to use your
 own version of `cheerio` you can pass it in as an option:
 
 ```javascript
