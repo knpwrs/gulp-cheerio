@@ -30,7 +30,7 @@
     "sinon-chai": "~2.4.0"
   },
   "dependencies": {
-    "cheerio": "~0.13.0",
+    "cheerio": "~0.14.0",
     "event-stream": "~3.1.0",
     "gulp-util": "~2.2.10"
   }
