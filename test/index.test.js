@@ -120,6 +120,26 @@ describe('gulp-cheerio tests', function () {
     spy.should.be.calledThrice;
   });
 
+  it('should work in XML mode', function () {
+    var runSpy = sinon.spy(),
+        fake$ = {
+          xml: sinon.stub().returns('xml'),
+          html: sinon.stub().returns('html')
+        };
+    sinon.stub(cheerio, 'load').returns(fake$);
+    var stream = gc({
+      run: runSpy,
+      parserOptions: {
+        xmlMode: true
+      }
+    });
+    stream.write(this.bufferFile);
+    fake$.xml.should.be.calledOnce;
+    fake$.html.should.not.be.called;
+    runSpy.should.be.calledOnce;
+    cheerio.load.restore();
+  });
+
   // Create some similar tests: one with a callback and the other with no callback
   [{
     name: 'should load via cheerio and pass the cheerio object to the run function (no callback)',
