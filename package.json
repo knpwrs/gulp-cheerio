@@ -1,6 +1,6 @@
 {
   "name": "gulp-cheerio",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Manipulate HTML files with Cheerio in Gulp.",
   "main": "lib/index.js",
   "scripts": {
