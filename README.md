@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/KenPowers/gulp-cheerio.png)](https://travis-ci.org/KenPowers/gulp-cheerio)
 
-This is a plugin for [gulp][gulp] which allows you to manipulate HTML files
+This is a plugin for [gulp][gulp] which allows you to manipulate HTML and XML files
 using [cheerio][cheerio].
 
 # Usage
@@ -84,6 +84,17 @@ cheerio({
   run: function () {},
   parserOptions: {
     // Options here
+  }
+})
+```
+
+When the xmlMode option is set to true cheerio's $.xml() method will be used to render:
+
+```
+cheerio({
+  run: function () {},
+  parserOptions: {
+    xmlMode: true
   }
 })
 ```
