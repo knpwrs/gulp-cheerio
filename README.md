@@ -99,12 +99,14 @@ cheerio({
 })
 ```
 
-Currently, `gulp-cheerio` uses `cheerio` `~0.14.0`. If you want to use your
-own version of `cheerio` you can pass it in as an option:
+As of version `0.4.0` `gulp-cheerio` installs `cheerio` `0.*` as a peer
+dependency. If you want use a specific version of cheerio you can define it as
+a dependency in your `package.json`. Alternatively, if you want to use your
+own special build / version of `cheerio`, you can pass it in as an option:
 
 ```js
 cheerio({
-  cheerio: require('cheerio') // local version of `cheerio`
+  cheerio: require('my-cheerio') // special version of `cheerio`
 })
 ```
 
