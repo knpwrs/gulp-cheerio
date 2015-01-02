@@ -10,7 +10,7 @@ using [cheerio][cheerio].
 There are two ways to use `gulp-cheerio`: synchronous and asynchronous. See
 the following usage examples:
 
-```javascript
+```js
 var gulp = require('gulp'),
     cheerio = require('gulp-cheerio');
 
@@ -46,7 +46,7 @@ gulp.task('async', function () {
 
 If `run` is the only option you are passing then you may simply pass a function:
 
-```javascript
+```js
 var gulp = require('gulp'),
     cheerio = require('gulp-cheerio');
 
@@ -79,7 +79,7 @@ gulp.task('async', function () {
 If you want to use [custom parser options][cpo] simply use the `parserOptions`
 option:
 
-```
+```js
 cheerio({
   run: function () {},
   parserOptions: {
@@ -90,7 +90,7 @@ cheerio({
 
 When the xmlMode option is set to true cheerio's $.xml() method will be used to render:
 
-```
+```js
 cheerio({
   run: function () {},
   parserOptions: {
@@ -102,7 +102,7 @@ cheerio({
 Currently, `gulp-cheerio` uses `cheerio` `~0.14.0`. If you want to use your
 own version of `cheerio` you can pass it in as an option:
 
-```javascript
+```js
 cheerio({
   cheerio: require('cheerio') // local version of `cheerio`
 })
