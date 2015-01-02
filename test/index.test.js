@@ -140,52 +140,100 @@ describe('gulp-cheerio tests', function () {
     cheerio.load.restore();
   });
 
-  // Create some similar tests: one with a callback and the other with no callback
-  [{
-    name: 'should load via cheerio and pass the cheerio object to the run function (no callback)',
-    conf: {run: sinon.spy()},
-    match: sinon.match.falsy
-  }, {
-    name: 'should load via cheerio and pass the cheerio object to the run function (callback)',
-    // Not using stub so length property is set correctly
-    conf: {run: sinon.spy(function ($, done) { done(); })},
-    match: sinon.match.func
-  }, {
-    name: 'should load via cheerio and pass the cheerio object to the run function (function as config, no callback)',
-    conf: sinon.spy(),
-    match: sinon.match.falsy
-  }, {
-    name: 'should load via cheerio and pass the cheerio object to the run function (function as config, callback)',
-    conf: sinon.spy(function ($, done) { done(); }),
-    match: sinon.match.func
-  }].forEach(function (test) {
-    it(test.name, function () {
-      // Testing variables
-      var html = 'HTML Content',
-          $ = {
-            html: sinon.spy(function () {
-              return html;
-            })
-          },
-          stream = gc(test.conf),
-          dataSpy = sinon.spy();
-      // Stub cheerio's load
-      sinon.stub(cheerio, 'load').returns($);
-      // Spy on data stream
-      stream.on('data', dataSpy);
-      // Write "file" through stream
-      stream.write(this.bufferFile);
-      // Assertions
-      cheerio.load.should.be.calledOnce;
-      cheerio.load.should.be.calledWith(this.originalContent);
-      dataSpy.should.be.calledWith(this.bufferFile, sinon.match.falsy);
-      this.bufferFile.contents.toString().should.equal(html);
-      $.html.should.be.calledOnce;
-      var runner = typeof test.conf === 'function' ? test.conf : test.conf.run;
-      runner.should.be.calledOnce;
-      runner.should.be.calledWith($, test.match);
-      // Restore cheerio's load
-      cheerio.load.restore();
+  describe('full-functional tests', function () {
+    var html = 'HTML Content';
+
+    describe('caching tests', function () {
+      var fake$, stream;
+      beforeEach(function () {
+        fake$ = {
+          html: sinon.spy(function () {
+            return html;
+          })
+        };
+        stream = gc(function ($, done) { done(); });
+      });
+
+      it('should cache the parsed cheerio object on to the file object', function () {
+        sinon.stub(cheerio, 'load').returns(fake$);
+        stream.write(this.bufferFile);
+        cheerio.load.should.be.calledOnce;
+        this.bufferFile.cheerio.should.equal(fake$);
+        delete this.bufferFile.cheerio;
+        cheerio.load.restore();
+      });
+
+      it('should use the cheerio cache if available', function () {
+        var fake$ = this.bufferFile.cheerio = {
+          html: sinon.spy(function () {
+            return html;
+          })
+        };
+        var stream = gc(function ($, done) {
+          $.should.equal(fake$);
+          done();
+        });
+        sinon.spy(cheerio, 'load');
+        stream.write(this.bufferFile);
+        cheerio.load.should.not.be.called;
+        this.bufferFile.cheerio.should.equal(fake$);
+        delete this.bufferFile.cheerio;
+        cheerio.load.restore();
+      });
     });
+
+    describe('run tests', function () {
+      var $, dataSpy;
+      beforeEach(function () {
+        $ = {
+          html: sinon.spy(function () {
+            return html;
+          })
+        };
+        dataSpy = sinon.spy();
+      });
+
+      // Create some similar tests: one with a callback and the other with no callback
+      [{
+        name: 'should load via cheerio and pass the cheerio object to the run function (no callback)',
+        conf: {run: sinon.spy()},
+        match: sinon.match.falsy
+      }, {
+        name: 'should load via cheerio and pass the cheerio object to the run function (callback)',
+        // Not using stub so length property is set correctly
+        conf: {run: sinon.spy(function ($, done) { done(); })},
+        match: sinon.match.func
+      }, {
+        name: 'should load via cheerio and pass the cheerio object to the run function (function as config, no callback)',
+        conf: sinon.spy(),
+        match: sinon.match.falsy
+      }, {
+        name: 'should load via cheerio and pass the cheerio object to the run function (function as config, callback)',
+        conf: sinon.spy(function ($, done) { done(); }),
+        match: sinon.match.func
+      }].forEach(function (test) {
+        it(test.name, function () {
+          // Test stream
+          var stream = gc(test.conf);
+          // Stub cheerio's load
+          sinon.stub(cheerio, 'load').returns($);
+          // Spy on data stream
+          stream.on('data', dataSpy);
+          // Write "file" through stream
+          stream.write(this.bufferFile);
+          // Assertions
+          cheerio.load.should.be.calledOnce;
+          cheerio.load.should.be.calledWith(this.originalContent);
+          dataSpy.should.be.calledWith(this.bufferFile, sinon.match.falsy);
+          this.bufferFile.contents.toString().should.equal(html);
+          $.html.should.be.calledOnce;
+          var runner = typeof test.conf === 'function' ? test.conf : test.conf.run;
+          runner.should.be.calledOnce;
+          runner.should.be.calledWith($, test.match);
+          // Restore cheerio's load
+          cheerio.load.restore();
+        });
+      });
+    })
   });
 });
