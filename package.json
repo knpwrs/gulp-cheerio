@@ -27,11 +27,14 @@
     "gulp-spawn-mocha": "~0.1.0",
     "chai": "~1.8.1",
     "sinon": "~1.7.3",
-    "sinon-chai": "~2.4.0"
+    "sinon-chai": "~2.4.0",
+    "cheerio": "0.*"
+  },
+  "peerDependencies": {
+    "cheerio": "0.*"
   },
   "dependencies": {
-    "cheerio": "~0.14.0",
-    "event-stream": "~3.1.0",
-    "gulp-util": "~2.2.10"
+    "event-stream": "^3.1.7",
+    "gulp-util": "^2.2.20"
   }
 }
