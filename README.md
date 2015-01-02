@@ -108,6 +108,13 @@ cheerio({
 })
 ```
 
+As of version `0.4.0` the parsed `$` object returned from `cheerio.load(...)`
+is cached to gulp's `file` object as `file.cheerio`. `gulp-cheerio` will look
+for `file.cheerio` before attempting to use `cheerio.load(...)`. This means
+that if you use `gulp-cheerio` multiple times in the same stream or with
+another plugin that supports caching cheerio in this fashion (such as
+[`gulp-svgstore`][gulpsvg]) each file will only be parsed once.
+
 # License
 
 **The MIT License**
@@ -136,3 +143,4 @@ SOFTWARE.
   [gulp]: http://gulpjs.com/ "gulp.js"
   [cheerio]: https://github.com/MatthewMueller/cheerio "cheerio"
   [cpo]: https://github.com/cheeriojs/cheerio#loading "Cheerio Load Options"
+  [gulpsvg]: https://github.com/w0rm/gulp-svgstore "gulp-svgstore"
