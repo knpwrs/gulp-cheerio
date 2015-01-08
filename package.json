@@ -1,7 +1,7 @@
 {
   "name": "gulp-cheerio",
   "version": "0.5.0",
-  "description": "Manipulate HTML files with Cheerio in Gulp.",
+  "description": "Manipulate HTML and XML files with Cheerio in Gulp.",
   "main": "lib/index.js",
   "scripts": {
     "test": "./node_modules/.bin/gulp test"
