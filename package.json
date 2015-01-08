@@ -34,7 +34,7 @@
     "cheerio": "0.*"
   },
   "dependencies": {
-    "event-stream": "^3.1.7",
-    "gulp-util": "^2.2.20"
+    "gulp-util": "~2.2.10",
+    "through2": "^0.6.3"
   }
 }
