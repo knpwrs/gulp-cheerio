@@ -59,7 +59,7 @@ describe('gulp-cheerio tests', function () {
     var error = new Error('foo');
     var stream = gc({
       // Not using stub so run function has proper length
-      run: function ($, done) {
+      run: function ($, file, done) {
         done(error);
       }
     });
@@ -151,7 +151,7 @@ describe('gulp-cheerio tests', function () {
             return html;
           })
         };
-        stream = gc(function ($, done) { done(); });
+        stream = gc(function ($, file, done) { done(); });
       });
 
       it('should cache the parsed cheerio object on to the file object', function () {
@@ -169,7 +169,7 @@ describe('gulp-cheerio tests', function () {
             return html;
           })
         };
-        var stream = gc(function ($, done) {
+        var stream = gc(function ($, file, done) {
           $.should.equal(fake$);
           done();
         });
@@ -201,7 +201,7 @@ describe('gulp-cheerio tests', function () {
       }, {
         name: 'should load via cheerio and pass the cheerio object to the run function (callback)',
         // Not using stub so length property is set correctly
-        conf: {run: sinon.spy(function ($, done) { done(); })},
+        conf: {run: sinon.spy(function ($, file, done) { done(); })},
         match: sinon.match.func
       }, {
         name: 'should load via cheerio and pass the cheerio object to the run function (function as config, no callback)',
@@ -209,7 +209,7 @@ describe('gulp-cheerio tests', function () {
         match: sinon.match.falsy
       }, {
         name: 'should load via cheerio and pass the cheerio object to the run function (function as config, callback)',
-        conf: sinon.spy(function ($, done) { done(); }),
+        conf: sinon.spy(function ($, file, done) { done(); }),
         match: sinon.match.func
       }].forEach(function (test) {
         it(test.name, function () {
@@ -229,7 +229,7 @@ describe('gulp-cheerio tests', function () {
           $.html.should.be.calledOnce;
           var runner = typeof test.conf === 'function' ? test.conf : test.conf.run;
           runner.should.be.calledOnce;
-          runner.should.be.calledWith($, test.match);
+          runner.should.be.calledWith($, this.bufferFile, test.match);
           // Restore cheerio's load
           cheerio.load.restore();
         });
