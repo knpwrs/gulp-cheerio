@@ -1,6 +1,6 @@
 # gulp-cheerio
 
-[![Build Status](https://travis-ci.org/KenPowers/gulp-cheerio.svg?branch=0.6.0)](https://travis-ci.org/KenPowers/gulp-cheerio) [![Coverage Status](https://coveralls.io/repos/KenPowers/gulp-cheerio/badge.svg?branch=0.6.0)](https://coveralls.io/r/KenPowers/gulp-cheerio?branch=0.6.0)
+[![Build Status](https://travis-ci.org/KenPowers/gulp-cheerio.svg?branch=master)](https://travis-ci.org/KenPowers/gulp-cheerio) [![Coverage Status](https://coveralls.io/repos/KenPowers/gulp-cheerio/badge.svg?branch=master)](https://coveralls.io/r/KenPowers/gulp-cheerio?branch=master)
 
 This is a plugin for [gulp][gulp] which allows you to manipulate HTML and XML files
 using [cheerio][cheerio].
