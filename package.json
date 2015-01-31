@@ -27,7 +27,7 @@
     "cheerio": "0.*",
     "coveralls": "^2.11.2",
     "gulp": "^3.8.10",
-    "gulp-spawn-mocha": "^0.5.2",
+    "gulp-spawn-mocha": "^2.0.0",
     "gulp-util": "~2.2.10",
     "istanbul": "^0.3.5",
     "mocha": "^2.1.0",
