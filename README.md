@@ -5,6 +5,13 @@
 This is a plugin for [gulp][gulp] which allows you to manipulate HTML and XML files
 using [cheerio][cheerio].
 
+# BREAKING CHANGE IN 0.6.0
+
+The main `run` function passed to cheerio now receives either two or three
+arguments (`$, file[, done]`) instead of one or two arguments (`$[, done]`).
+Make sure you update your build scripts accordingly. See the usage examples
+below.
+
 # Usage
 
 There are two ways to use `gulp-cheerio`: synchronous and asynchronous. See
