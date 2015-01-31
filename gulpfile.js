@@ -18,6 +18,7 @@ function test() {
     read: false
   }).pipe(mocha({
     R: 'spec',
-    r: path.join(__dirname, 'test', 'setup.js')
+    r: path.join(__dirname, 'test', 'setup.js'),
+    istanbul: true
   })).on('error', console.warn.bind(console));
 }
