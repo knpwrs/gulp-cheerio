@@ -5,12 +5,15 @@
 This is a plugin for [gulp][gulp] which allows you to manipulate HTML and XML files
 using [cheerio][cheerio].
 
-# BREAKING CHANGE IN 0.6.0
+# BREAKING CHANGES IN 0.6.x
 
 The main `run` function passed to cheerio now receives either two or three
 arguments (`$, file[, done]`) instead of one or two arguments (`$[, done]`).
 Make sure you update your build scripts accordingly. See the usage examples
 below.
+
+Additionally, cheerio is no longer a `peerDependency` because peer
+dependencies are being deprecated. See [npm/npm#6565][npm].
 
 # Usage
 
@@ -109,10 +112,8 @@ cheerio({
 })
 ```
 
-As of version `0.4.0` `gulp-cheerio` installs `cheerio` `0.*` as a peer
-dependency. If you want use a specific version of cheerio you can define it as
-a dependency in your `package.json`. Alternatively, if you want to use your
-own special build / version of `cheerio`, you can pass it in as an option:
+This module includes cheerio version `0.*`. If you want to use your own
+special build / version of `cheerio`, you can pass it in as an option:
 
 ```js
 cheerio({
@@ -156,3 +157,4 @@ SOFTWARE.
   [cheerio]: https://github.com/MatthewMueller/cheerio "cheerio"
   [cpo]: https://github.com/cheeriojs/cheerio#loading "Cheerio Load Options"
   [gulpsvg]: https://github.com/w0rm/gulp-svgstore "gulp-svgstore"
+  [npm]: https://github.com/npm/npm/issues/6565 "npm issue 6565"
