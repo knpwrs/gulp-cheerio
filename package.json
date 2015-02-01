@@ -6,10 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/gulp test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/KenPowers/gulp-cheerio.git"
-  },
+  "repository": "KenPowers/gulp-cheerio",
   "keywords": [
     "gulpplugin",
     "cheerio",
