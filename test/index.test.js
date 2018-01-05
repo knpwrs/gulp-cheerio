@@ -1,7 +1,7 @@
 describe('gulp-cheerio tests', function () {
   var gc = require('../'),
       cheerio = require('cheerio'),
-      FakeFile = require('gulp-util').File,
+      FakeFile = require('vinyl'),
       Stream = require('stream');
 
   beforeEach(function () {
@@ -73,7 +73,7 @@ describe('gulp-cheerio tests', function () {
   it('should fail when passed a stream', function () {
     var streamFile = new FakeFile({
       path: 'bar',
-      contents: new Stream()
+      contents: new Stream.Readable()
     });
     var stream = gc(),
         errorSpy = sinon.spy();
