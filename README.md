@@ -5,16 +5,6 @@
 This is a plugin for [gulp][gulp] which allows you to manipulate HTML and XML files
 using [cheerio][cheerio].
 
-# BREAKING CHANGES IN 0.6.x
-
-The main `run` function passed to cheerio now receives either two or three
-arguments (`$, file[, done]`) instead of one or two arguments (`$[, done]`).
-Make sure you update your build scripts accordingly. See the usage examples
-below.
-
-Additionally, cheerio is no longer a `peerDependency` because peer
-dependencies are being deprecated. See [npm/npm#6565][npm].
-
 # Usage
 
 There are two ways to use `gulp-cheerio`: synchronous and asynchronous. See
@@ -22,31 +12,35 @@ the following usage examples:
 
 ```js
 var gulp = require('gulp'),
-    cheerio = require('gulp-cheerio');
+  cheerio = require('gulp-cheerio');
 
-gulp.task('sync', function () {
+gulp.task('sync', function() {
   return gulp
     .src(['src/*.html'])
-    .pipe(cheerio(function ($, file) {
-      // Each file will be run through cheerio and each corresponding `$` will be passed here.
-      // `file` is the gulp file object
-      // Make all h1 tags uppercase
-      $('h1').each(function () {
-        var h1 = $(this);
-        h1.text(h1.text().toUpperCase());
-      });
-    }))
+    .pipe(
+      cheerio(function($, file) {
+        // Each file will be run through cheerio and each corresponding `$` will be passed here.
+        // `file` is the gulp file object
+        // Make all h1 tags uppercase
+        $('h1').each(function() {
+          var h1 = $(this);
+          h1.text(h1.text().toUpperCase());
+        });
+      }),
+    )
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('async', function () {
+gulp.task('async', function() {
   return gulp
     .src(['src/*.html'])
-    .pipe(cheerio(function ($, file, done) {
-      // The only difference here is the inclusion of a `done` parameter.
-      // Call `done` when everything is finished. `done` accepts an error if applicable.
-      done();
-    }))
+    .pipe(
+      cheerio(function($, file, done) {
+        // The only difference here is the inclusion of a `done` parameter.
+        // Call `done` when everything is finished. `done` accepts an error if applicable.
+        done();
+      }),
+    )
     .pipe(gulp.dest('dist/'));
 });
 ```
@@ -56,35 +50,39 @@ with your function as the `run` option:
 
 ```js
 var gulp = require('gulp'),
-    cheerio = require('gulp-cheerio');
+  cheerio = require('gulp-cheerio');
 
-gulp.task('sync', function () {
+gulp.task('sync', function() {
   return gulp
     .src(['src/*.html'])
-    .pipe(cheerio({
-      run: function ($, file) {
-        // Each file will be run through cheerio and each corresponding `$` will be passed here.
-        // `file` is the gulp file object
-        // Make all h1 tags uppercase
-        $('h1').each(function () {
-          var h1 = $(this);
-          h1.text(h1.text().toUpperCase());
-        });
-      }
-    }))
+    .pipe(
+      cheerio({
+        run: function($, file) {
+          // Each file will be run through cheerio and each corresponding `$` will be passed here.
+          // `file` is the gulp file object
+          // Make all h1 tags uppercase
+          $('h1').each(function() {
+            var h1 = $(this);
+            h1.text(h1.text().toUpperCase());
+          });
+        },
+      }),
+    )
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('async', function () {
+gulp.task('async', function() {
   return gulp
     .src(['src/*.html'])
-    .pipe(cheerio({
-      run: function ($, file, done) {
-        // The only difference here is the inclusion of a `done` parameter.
-        // Call `done` when everything is finished. `done` accepts an error if applicable.
-        done();
-      }
-    }))
+    .pipe(
+      cheerio({
+        run: function($, file, done) {
+          // The only difference here is the inclusion of a `done` parameter.
+          // Call `done` when everything is finished. `done` accepts an error if applicable.
+          done();
+        },
+      }),
+    )
     .pipe(gulp.dest('dist/'));
 });
 ```
@@ -94,22 +92,22 @@ option:
 
 ```js
 cheerio({
-  run: function () {},
+  run: function() {},
   parserOptions: {
     // Options here
-  }
-})
+  },
+});
 ```
 
-When the xmlMode option is set to true cheerio's $.xml() method will be used to render:
+When the xmlMode option is set to true cheerio's \$.xml() method will be used to render:
 
 ```js
 cheerio({
-  run: function () {},
+  run: function() {},
   parserOptions: {
-    xmlMode: true
-  }
-})
+    xmlMode: true,
+  },
+});
 ```
 
 This module includes cheerio version `0.*`. If you want to use your own
@@ -117,8 +115,8 @@ special build / version of `cheerio`, you can pass it in as an option:
 
 ```js
 cheerio({
-  cheerio: require('my-cheerio') // special version of `cheerio`
-})
+  cheerio: require('my-cheerio'), // special version of `cheerio`
+});
 ```
 
 As of version `0.4.0` the parsed `$` object returned from `cheerio.load(...)`
@@ -152,9 +150,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-
-  [gulp]: http://gulpjs.com/ "gulp.js"
-  [cheerio]: https://github.com/MatthewMueller/cheerio "cheerio"
-  [cpo]: https://github.com/cheeriojs/cheerio#loading "Cheerio Load Options"
-  [gulpsvg]: https://github.com/w0rm/gulp-svgstore "gulp-svgstore"
-  [npm]: https://github.com/npm/npm/issues/6565 "npm issue 6565"
+[gulp]: http://gulpjs.com/ 'gulp.js'
+[cheerio]: https://github.com/MatthewMueller/cheerio 'cheerio'
+[cpo]: https://github.com/cheeriojs/cheerio#loading 'Cheerio Load Options'
+[gulpsvg]: https://github.com/w0rm/gulp-svgstore 'gulp-svgstore'
+[npm]: https://github.com/npm/npm/issues/6565 'npm issue 6565'
